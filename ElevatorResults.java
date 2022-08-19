@@ -10,10 +10,7 @@ import java.util.Locale;
 /** Programa criado para solucionar desafio admissional Apisul
  * <p>
  * Foi feito o tratamento de um arquivo JSON, implementação da
- * regra de negocio e uma interface para acesso as respostas.
- * O sistema consegue identificar duplicatas e valores de não uso 
- * dos andares, como por exemplo a resposta C que indica dois 
- * elevadores com mesmo valor de uso e exibe os dois ao invés de um. 
+ * regra de negocio e uma interface para acesso as respostas. 
  * input.json deve ser passado como parametro de JsonInputReader()
  * @author Marcos Vinicius Pereira da Silva
  */
