@@ -29,10 +29,3 @@ public class Elevatortest {
 }
     
 }
-       /* Metodo funcionando
-        System.out.println("Resposta A :\n" + resultado.respostaA() + "\n----------");
-        System.out.println("Resposta B :\n" + resultado.respostaB() + "\n----------");
-        System.out.println("Resposta C :\n" + resultado.respostaC() + "\n----------");
-        System.out.println("Resposta D :\n" + resultado.respostaD() + "\n----------");
-        System.out.println("Resposta E :\n" + resultado.respostaE() + "----------");
-        */
