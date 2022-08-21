@@ -1,4 +1,4 @@
-package com.marcos.testeadm;
+package com.marcos.testeAdmissional;
 
 import java.util.List;
 

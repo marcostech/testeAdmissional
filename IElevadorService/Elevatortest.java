@@ -1,4 +1,4 @@
-package com.marcos.testeadm;
+package com.marcos.testeAdmissional;
 
 /** Programa criado para solucionar desafio admissional Apisul
  * <p>
@@ -22,7 +22,5 @@ public class Elevatortest {
         System.out.println(resultados.periodoMaiorFluxoElevadorMaisFrequentado());
         System.out.println(resultados.periodoMaiorUtilizacaoConjuntoElevadores());
         System.out.println(resultados.periodoMenorFluxoElevadorMenosFrequentado());
-               
-}
-    
+    }
 }
