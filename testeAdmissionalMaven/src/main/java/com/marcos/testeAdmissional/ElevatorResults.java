@@ -40,15 +40,13 @@ public class ElevatorResults implements IElevadorService {
      */    
     public List<Float> getElevPercent() { 
         ArrayList<Integer> totalUse = new ArrayList<>();
-        List<Float> resultado = new ArrayList<>();
-        for(Integer andar: this.andares){
-            totalUse.add(andar);
-        }
-        //
+        List<Float> resultado = new ArrayList<>();        
         int maxUse = 0;
-        for (int i = 0; totalUse.size() > i;i++){ //soma os usos para chegar ao total
-            maxUse += totalUse.get(i);
+        
+        for(Integer andar: this.andares){
+            maxUse += andar;
         }
+        
         //Elevador A
         float elevAMaxUse = 0; //condicional se for zero, evita divisão por zero
         if(this.elevadores.get(0)>0){ 
