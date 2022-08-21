@@ -1,5 +1,13 @@
 package com.marcos.testeAdmissional;
 
+/** Programa criado para solucionar desafio admissional Apisul
+ * <p>
+ * Foi feito o tratamento de um arquivo JSON, implementação da
+ * regra de negocio e uma interface para acesso as respostas.
+ * input.json deve ser passado como parametro de JsonInputReader()
+ * @author Marcos Vinicius Pereira da Silva
+ */
+
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
@@ -7,96 +15,23 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-/** Programa criado para solucionar desafio admissional Apisul
- * <p>
- * Foi feito o tratamento de um arquivo JSON, implementação da
- * regra de negocio e uma interface para acesso as respostas. 
- * input.json deve ser passado como parametro de JsonInputReader()
- * @author Marcos Vinicius Pereira da Silva
- */
-
 public class ElevatorResults implements IElevadorService {
-    private int elevA, elevB, elevC, elevD, elevE;
-    private int turnoM, turnoV, turnoN;
+    private List<Integer> periodosElevadorMaisUsado;
+    private List<Integer> periodosElevadorMenosUsado;
     private List<Integer> elevadores;
     private List<Integer> andares;
     private List<Integer> turnos;
-    
-    
+        
     public ElevatorResults(){
+        //incia listas zeradas para armazenamento dos valores
         this.andares = new ArrayList<>(Collections.nCopies(16,0));
         this.elevadores = new ArrayList<>(Collections.nCopies(5,0));
         this.turnos = new ArrayList<>(Collections.nCopies(3,0));
-    }
-    //metodos uteis 
-    public String getElevUsage(){
-        ArrayList<Integer> elevadores = new ArrayList<>();
-        ArrayList<String> elevadoresIndex = new ArrayList<>();        
-        ArrayList<String> elevMostUsed = new ArrayList<>();        
-        ArrayList<String> elevLessUsed = new ArrayList<>();
-        //init
-        elevadoresIndex.add("A");
-        elevadoresIndex.add("B");
-        elevadoresIndex.add("C");
-        elevadoresIndex.add("D");
-        elevadoresIndex.add("E");
-        elevadores.add(this.elevA);
-        elevadores.add(this.elevB);
-        elevadores.add(this.elevC);
-        elevadores.add(this.elevD);
-        elevadores.add(this.elevE);  
-        
-        //Logica
-        //andar mais utilizado
-        int elevMax = Collections.max(elevadores); //maior valor
-        int index = 0;
-        for (Integer elevador : elevadores){ //Verifica duplicados
-            if (elevador == elevMax){
-                elevMostUsed.add(elevadoresIndex.get(index)); //adiciona duplicados
-            }
-            index++;
-        }
-        String mostUsed = "Elevador mais utilizado: ";
-        for (String elevResultados : elevMostUsed) {
-            mostUsed += elevResultados + " ";
-        }
-        
-        //andar menos utilizados
-        int elevMin = Collections.min(elevadores); //menor valor
-        index = 0;
-        for (Integer elevador : elevadores){ //Verifica duplicados
-            if (elevador == elevMin){
-                elevLessUsed.add(elevadoresIndex.get(index)); //adiciona duplicados
-            }
-            index++;
-        }
-        String lessUsed = "Elevador menos utilizado: ";
-        for (String elevResultados : elevLessUsed) {
-            lessUsed += elevResultados + " ";
-        }       
-        
-        //retorno
-        //String elevMostUsed = "Elevador mais utilizado: " + elevadoresIndex.get(elevadores.indexOf(Collections.max(elevadores)));
-        //String elevLessUsed = "Elevador menos utilizado: " + elevadoresIndex.get(elevadores.indexOf(Collections.min(elevadores)));
-        return mostUsed + "\n" + lessUsed;
+        this.periodosElevadorMaisUsado = new ArrayList<>(Collections.nCopies(3,0));        
+        this.periodosElevadorMenosUsado = new ArrayList<>(Collections.nCopies(3,0));
     }
     
-    public String getTurnoUsage(){
-        ArrayList<Integer> turnos = new ArrayList<>();
-        ArrayList<String> turnosIndex = new ArrayList<>();
-        //init
-        turnosIndex.add("Matutino");
-        turnosIndex.add("Vespertino");
-        turnosIndex.add("Noturno");
-        turnos.add(this.turnoM);
-        turnos.add(this.turnoV);
-        turnos.add(this.turnoN);
-        //retorno
-        String turnoMostUsed = "Turno mais utilizado: " + turnosIndex.get(turnos.indexOf(Collections.max(turnos)));
-        String turnoLessUsed = "Turno menos utilizado: " + turnosIndex.get(turnos.indexOf(Collections.min(turnos)));
-        return turnoMostUsed + "\n" + turnoLessUsed;
-    }    
-    
+    //metodos uteis
     /**
      * @return Retornar um array de floats contendo a porcentagem de uso de cada 
      * elevador, ordem alfabetica de elevadores -> A = 0,B = 1,C = 2,D = 3,E = 4
@@ -152,106 +87,53 @@ public class ElevatorResults implements IElevadorService {
         resultado.add(elevEMaxUse);
     return resultado;
     }
-    
-    //elevadores setters
-    public void addElevA (){
-    this.elevadores.set(0, (this.elevadores.get(0) + 1));
+     
+    //getters e setters    
+    public void addAndar (int i) {    
+        this.andares.set(i, (this.andares.get(i) + 1));
     }
     
-    public void addElevB (){
-    this.elevadores.set(1, (this.elevadores.get(1) + 1));
-    }
-
-    public void addElevC (){
-    this.elevadores.set(2, (this.elevadores.get(2) + 1));
-    }
-
-    public void addElevD (){
-    this.elevadores.set(3, (this.elevadores.get(3) + 1));
-    }
-
-    public void addElevE (){
-    this.elevadores.set(4, (this.elevadores.get(4) + 1));
-    }     
-    
-    //turnos setters    
-    public void addTurnoM (){
-    this.turnos.set(0, (this.turnos.get(0) + 1));
-    } 
-    
-    public void addTurnoV (){
-    this.turnos.set(1, (this.turnos.get(1) + 1));
-    }    
-    
-    public void addTurnoN (){
-    this.turnos.set(2, (this.turnos.get(2) + 1));
-    }
-       
-    //andares setters 
-    public void addAndar0 () {    
-    this.andares.set(0, (this.andares.get(0) + 1));
+    public void addElevador (int i) {
+        int elevador = i - 65; //converte de A = ASCII para A = 0 e assim por diante
+        this.elevadores.set(elevador, (this.elevadores.get(elevador) + 1));
     }
     
-    public void addAndar1 () {    
-    this.andares.set(1, (this.andares.get(1) + 1));
+    public void addTurno (char i) {
+        int turno = 0;
+        if(i == 'M'){turno = 0;} //converte de M = ASCII para M = 0 e assim por diante
+        if(i == 'V'){turno = 1;} //converte de V = ASCII para V = 0 e assim por diante
+        if(i == 'N'){turno = 2;} //converte de N = ASCII para N = 0 e assim por diante
+        this.turnos.set(turno, (this.turnos.get(turno) + 1));
     }
     
-    public void addAndar2 () {    
-    this.andares.set(2, (this.andares.get(2) + 1));
+    public void addPeriodosElevadorMaisUsado(char i){
+        int turno = 0;
+        if(i == 'M'){turno = 0;} //converte de M = ASCII para M = 0 e assim por diante
+        if(i == 'V'){turno = 1;} //converte de V = ASCII para V = 0 e assim por diante
+        if(i == 'N'){turno = 2;} //converte de N = ASCII para N = 0 e assim por diante
+        this.periodosElevadorMaisUsado.set(turno, (this.periodosElevadorMaisUsado.get(turno) + 1));
     }
     
-    public void addAndar3 () {    
-    this.andares.set(3, (this.andares.get(3) + 1));
-    }
-
-    public void addAndar4 () {    
-    this.andares.set(4, (this.andares.get(4) + 1));
-    }
-
-    public void addAndar5 () {    
-    this.andares.set(5, (this.andares.get(5) + 1));
-    }
-
-    public void addAndar6 () {    
-    this.andares.set(6, (this.andares.get(6) + 1));
-    }
-
-    public void addAndar7 () {    
-    this.andares.set(7, (this.andares.get(7) + 1));
-    }
-
-    public void addAndar8 () {    
-    this.andares.set(8, (this.andares.get(8) + 1));
-    }
-
-    public void addAndar9 () {    
-    this.andares.set(9, (this.andares.get(9) + 1));
-    }
-
-    public void addAndar10 () {    
-    this.andares.set(10, (this.andares.get(10) + 1));
-    }
-
-    public void addAndar11 () {    
-    this.andares.set(11, (this.andares.get(11) + 1));
+    public void addPeriodosElevadorMenosUsado(char i){
+        int turno = 0;
+        if(i == 'M'){turno = 0;} //converte de M = ASCII para M = 0 e assim por diante
+        if(i == 'V'){turno = 1;} //converte de V = ASCII para V = 0 e assim por diante
+        if(i == 'N'){turno = 2;} //converte de N = ASCII para N = 0 e assim por diante
+        this.periodosElevadorMenosUsado.set(turno, (this.periodosElevadorMenosUsado.get(turno) + 1));
     }
     
-    public void addAndar12 () {    
-    this.andares.set(12, (this.andares.get(12) + 1));
-    }
-
-    public void addAndar13 () {    
-    this.andares.set(13, (this.andares.get(13) + 1));
+    public int getTurno (int i) {    
+        return this.turnos.get(i);
     }
     
-    public void addAndar14 () {    
-    this.andares.set(14, (this.andares.get(14) + 1));
+    public int getElevador (int i) {    
+        return this.elevadores.get(i);
     }
-
-    public void addAndar15 () {    
-    this.andares.set(15, (this.andares.get(15) + 1));
+    
+    public int getAndar (int i) {    
+        return this.andares.get(i);
     }
-
+    
     @Override
     public List<Integer> andarMenosUtilizado() {
         List<Integer> resultado = new ArrayList<>();        
@@ -285,14 +167,16 @@ public class ElevatorResults implements IElevadorService {
     @Override
     public List<Character> periodoMaiorFluxoElevadorMaisFrequentado() {
         List<Character> resultado = new ArrayList<>();        
-        int elevadorMax = Collections.max(this.elevadores); //maior valor        
-        int index = 65;//começa os caracteres com A, 65 = A
+        int periodoMais = Collections.max(this.periodosElevadorMaisUsado);
         
-        for (Integer elevadoresUso : this.elevadores){ //Verifica duplicados
-            if (elevadoresUso == elevadorMax){
-                resultado.add((char)(index)); //adiciona duplicados
-            }
-            index++;
+        for (Character elevadores: elevadorMaisFrequentado()){ //Verifica duplicados
+            if(this.periodosElevadorMaisUsado.get(0) == periodoMais) {
+                resultado.add('M'); //Maneira 1 de passar o char no resultado
+            } else if(this.periodosElevadorMaisUsado.get(1) == periodoMais) {
+                resultado.add('V');
+            } else if(this.periodosElevadorMaisUsado.get(2) == periodoMais) {
+                resultado.add('N');
+            }            
         }
         return resultado;
     }
@@ -300,7 +184,7 @@ public class ElevatorResults implements IElevadorService {
     @Override
     public List<Character> elevadorMenosFrequentado() {
         List<Character> resultado = new ArrayList<>();        
-        int elevadorMin = Collections.min(this.elevadores); //maior valor        
+        int elevadorMin = Collections.min(this.elevadores); //menor valor          
         int index = 65;//começa os caracteres com A, 65 = A
         
         for (Integer elevadoresUso : this.elevadores){ //Verifica duplicados
@@ -315,14 +199,17 @@ public class ElevatorResults implements IElevadorService {
     @Override
     public List<Character> periodoMenorFluxoElevadorMenosFrequentado() {
         List<Character> resultado = new ArrayList<>();        
-        List<Character> resultadoMaisFreq = elevadorMaisFrequentado();        
-        List<Integer> usoElevador = new ArrayList<>();
+        int periodoMenos = Collections.max(this.periodosElevadorMenosUsado);
         
-        for (Character usoMaisFreq : resultadoMaisFreq){
-           
-                   
+        for (Character elevadores: elevadorMenosFrequentado()){ //Verifica duplicados
+            if(this.periodosElevadorMenosUsado.get(0) == periodoMenos) {
+                resultado.add('M'); //Maneira 1 de passar o char no resultado
+            } else if(this.periodosElevadorMenosUsado.get(1) == periodoMenos) {
+                resultado.add('V');
+            } else if(this.periodosElevadorMenosUsado.get(2) == periodoMenos) {
+                resultado.add('N');
+            }            
         }
-        
         return resultado;
     }
 
@@ -330,11 +217,11 @@ public class ElevatorResults implements IElevadorService {
     public List<Character> periodoMaiorUtilizacaoConjuntoElevadores() {
         List<Character> resultado = new ArrayList<>();
         List<Character> turnosChar = new ArrayList<>();
-        turnosChar.add('M');
+        turnosChar.add('M'); //Maneira 2 de passar o char no resultado
         turnosChar.add('V');
         turnosChar.add('N');        
         int turnoMax = Collections.max(this.turnos); //maior valor        
-        int index = 0;//
+        int index = 0;
         
         for (Integer turnosUso : this.turnos){ //Verifica duplicados
             if (turnosUso == turnoMax){
@@ -379,5 +266,4 @@ public class ElevatorResults implements IElevadorService {
         DecimalFormat df = new DecimalFormat("0.##", DecimalFormatSymbols.getInstance(Locale.US));
         return Float.valueOf(df.format(resultado));
     }
-    
 }

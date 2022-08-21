@@ -22,7 +22,5 @@ public class Elevatortest {
         System.out.println(resultados.periodoMaiorFluxoElevadorMaisFrequentado());
         System.out.println(resultados.periodoMaiorUtilizacaoConjuntoElevadores());
         System.out.println(resultados.periodoMenorFluxoElevadorMenosFrequentado());
-               
-}
-    
+    }
 }
