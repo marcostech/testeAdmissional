@@ -1,4 +1,6 @@
 # Teste Admissional de uma empresa confidencial
+Elevatortest.java = main
+
 Provavelmente o codigo de Input do arquivo JSON deve ser alterado para refletir caminho no Computador.
 
 - Feito no NetBeans com Maven
